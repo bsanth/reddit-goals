@@ -1,6 +1,49 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('GoalsCtrl', function($scope, $sce, goalService) {
+
+  $scope.isGoalVideo = function (item) {
+    if(item.data.title.indexOf("goal vs") > 0 && (item.data.media_embed != null || item.data.secure_media_embed != null)) {
+      return true;
+    }
+    return false;
+  };
+
+  $scope.trustUrl = function (url) {
+    var urlSplit = url.split('/');
+    var videoId = urlSplit[urlSplit.length - 1];
+    return $sce.trustAsResourceUrl('http://streamable.com/e/' + videoId);
+  };
+
+  $scope.trustUrl1 = function (url) {
+    var urlSplit = url.split('/');
+    var videoId = urlSplit[urlSplit.length - 1];
+    return $sce.trustAsResourceUrl('http://cdn.streamable.com/video/mp4-mobile/' + videoId + '.mp4');
+  };
+
+  $scope.toggleVideo = function (item) {
+    if(item.showVideo) {
+      item.showVideo = !item.showVideo;
+    } else {
+      item.showVideo = true;
+    }
+  };
+
+  $scope.getGoals = function () {
+    goalService.getGoals().then(function (response) {
+    console.log(response.data);
+      $scope.goals = response.data.data.children;
+    }, function (error) {
+      $ionicLoading.show({
+        template: 'Failed to get goals',
+        duration: '1000'
+      });
+    });
+  };
+
+  $scope.getGoals();
+
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called
@@ -11,18 +54,9 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
