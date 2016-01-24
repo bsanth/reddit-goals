@@ -3,7 +3,13 @@
     <button class="button button-block button-outline button-positive" ng-click="getGoals()">
       Get latest goals
     </button>
-    <div class="list card" ng-repeat="goal in goals" ng-if="isGoalVideo(goal)">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="search.data.title">
+      </label>
+    </div>
+    <div class="list card" ng-repeat="goal in goals | filter:search:strict" ng-if="isGoalVideo(goal)">
       <div class="item">
         <h2>{{goal.data.title}}</h2>
       </div>

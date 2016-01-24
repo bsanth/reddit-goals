@@ -49,33 +49,4 @@ angular.module('starter.controllers', [])
 
   $scope.getGoals();
 
-})
-
-.controller('MatchesCtrl', function($scope, $sce, goalService) {
-
-  $scope.isPostMatchThread = function (item) {
-    if(item.data.link_flair_text === "Post Match Thread") {
-      return true;
-    }
-    return false;
-  };
-
-  $scope.getMatches = function () {
-    goalService.getMatches().then(function (response) {
-      $scope.matches = response.data.data.children;
-    }, function (error) {
-      $ionicLoading.show({
-        template: 'Failed to get matches',
-        duration: '1000'
-      });
-    });
-  };
-
-  $scope.getMatches();
-
-})
-
-.controller('MatchDetailCtrl', function($scope, $stateParams) {
-  console.log("test");
-})
-
+});
