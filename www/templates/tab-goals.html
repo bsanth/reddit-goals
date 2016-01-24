@@ -9,15 +9,19 @@
       </div>
       <div class="item item-image video-container">
         <div>
-          <!-- <iframe ng-src="{{trustUrl(goal.data.url)}}" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen scrolling="no">
-          </iframe> -->
           <button class="button button-block button-outline button-positive"
               ng-click="toggleVideo(goal)">
             Video
           </button>
           <video width="100%" height="100%" controls ng-if="goal.showVideo">
-            <source ng-src="{{trustUrl1(goal.data.url)}}" type="video/mp4">
+            <source ng-src="{{trustUrlAlt(goal.data.url)}}" type="video/mp4">
           </video>
+          <button class="button button-block button-outline button-positive"
+              ng-click="toggleAlt(goal)">
+            Source webpage
+          </button>
+          <iframe ng-src="{{trustUrl(goal.data.url)}}" ng-if="goal.showAlt" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen>
+          </iframe>
         </div>
       </div>
     </div>

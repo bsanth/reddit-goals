@@ -5,7 +5,7 @@ angular.module('starter.services', [])
   var getGoals = function() {
     var req = {
       method: 'GET',
-      url: 'http://www.reddit.com/r/soccer.json',
+      url: 'http://www.reddit.com/r/soccer/new.json?limit=100',
     };
     return $http(req);
   };

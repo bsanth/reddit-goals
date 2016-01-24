@@ -3,16 +3,14 @@ angular.module('starter.controllers', [])
 .controller('GoalsCtrl', function($scope, $sce, goalService) {
 
   $scope.isGoalVideo = function (item) {
-    if(item.data.title.indexOf("goal vs") > 0 && (item.data.media_embed != null || item.data.secure_media_embed != null)) {
+    if(item.data.title.indexOf(" goal ") > 0 && (item.data.media_embed != null || item.data.secure_media_embed != null)) {
       return true;
     }
     return false;
   };
 
   $scope.trustUrl = function (url) {
-    var urlSplit = url.split('/');
-    var videoId = urlSplit[urlSplit.length - 1];
-    return $sce.trustAsResourceUrl('http://streamable.com/e/' + videoId);
+    return $sce.trustAsResourceUrl(url);
   };
 
   $scope.trustUrl1 = function (url) {
@@ -27,6 +25,15 @@ angular.module('starter.controllers', [])
     } else {
       item.showVideo = true;
     }
+  };
+
+  $scope.toggleAlt = function (item) {
+    if(item.showAlt) {
+      item.showAlt = !item.showAlt;
+    } else {
+      item.showAlt = true;
+    }
+    console.log(decodeURI(item.data.media_embed.content).replace(/&gt;/g, '>').replace(/&lt;/g, '<'));
   };
 
   $scope.getGoals = function () {
