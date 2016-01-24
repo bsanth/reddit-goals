@@ -3,7 +3,8 @@ angular.module('starter.controllers', [])
 .controller('GoalsCtrl', function($scope, $sce, goalService) {
 
   $scope.isGoalVideo = function (item) {
-    if(item.data.title.indexOf(" goal ") > 0 && (item.data.media_embed != null || item.data.secure_media_embed != null)) {
+    if((item.data.title.indexOf(" goal ") > 0 || item.data.title.indexOf("score") > 0) &&
+          item.data.link_flair_text === "Media") {
       return true;
     }
     return false;
@@ -13,7 +14,7 @@ angular.module('starter.controllers', [])
     return $sce.trustAsResourceUrl(url);
   };
 
-  $scope.trustUrl1 = function (url) {
+  $scope.trustUrlAlt = function (url) {
     var urlSplit = url.split('/');
     var videoId = urlSplit[urlSplit.length - 1];
     return $sce.trustAsResourceUrl('http://cdn.streamable.com/video/mp4-mobile/' + videoId + '.mp4');
@@ -33,12 +34,10 @@ angular.module('starter.controllers', [])
     } else {
       item.showAlt = true;
     }
-    console.log(decodeURI(item.data.media_embed.content).replace(/&gt;/g, '>').replace(/&lt;/g, '<'));
   };
 
   $scope.getGoals = function () {
     goalService.getGoals().then(function (response) {
-    console.log(response.data);
       $scope.goals = response.data.data.children;
     }, function (error) {
       $ionicLoading.show({
@@ -50,20 +49,4 @@ angular.module('starter.controllers', [])
 
   $scope.getGoals();
 
-})
-
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-
-})
-
+});

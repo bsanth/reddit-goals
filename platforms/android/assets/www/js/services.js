@@ -5,13 +5,13 @@ angular.module('starter.services', [])
   var getGoals = function() {
     var req = {
       method: 'GET',
-      url: 'http://www.reddit.com/r/soccer/new.json?limit=100',
+      url: 'http://www.reddit.com/r/soccer.json?sort=new&from=week&limit=100',
     };
     return $http(req);
   };
 
   var api = {
-    getGoals: getGoals
+    getGoals: getGoals,
   };
 
   return api;
